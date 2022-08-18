@@ -151,7 +151,7 @@ RUN echo "**** install jupyterlab-git ****" && \
     echo "**** install sphinx ****" && \
     python3 -m pip install sphinx sphinx-autodoc-defaultargs sphinx-autodoc-typehints sphinx-rtd-theme && \
     python3 -m pip cache purge && \
-    rm -rf /home/jovyan/.cache && \
+    # rm -rf /home/jovyan/.cache && \
     conda clean --all -y && \
     jupyter lab clean
 
