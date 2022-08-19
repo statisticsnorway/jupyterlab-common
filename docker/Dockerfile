@@ -185,3 +185,5 @@ RUN chmod +x /usr/local/bin/ssb-gitconfig.py
 COPY jupyter_notebook_extra_config.py /tmp/
 RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
+
+USER $NB_UID
