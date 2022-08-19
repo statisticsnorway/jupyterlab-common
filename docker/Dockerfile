@@ -166,6 +166,7 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow
 
 USER root
+
 # Set localtime to Europe/Oslo
 RUN rm -f /etc/localtime && \
     ln -s /usr/share/zoneinfo/Europe/Oslo /etc/localtime
