@@ -72,6 +72,8 @@ RUN R CMD javareconf -e && \
     R -e "install.packages('languageserver', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('sotkanet', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('ggiraph', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
+    R -e "install.packages('dcmodify', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
+    R -e "install.packages('simputation', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "library(rio); install_formats()" && \
     # Doesn t work with Java11 - use a custom one
     #curl --silent -L -o- https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.3/jwsacruncher-2.2.3-bin.zip | bsdtar -xvf- -C /opt && \
@@ -164,6 +166,7 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow
 
 USER root
+
 # Set localtime to Europe/Oslo
 RUN rm -f /etc/localtime && \
     ln -s /usr/share/zoneinfo/Europe/Oslo /etc/localtime
@@ -179,3 +182,8 @@ RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.0.38/quar
 RUN wget -O /usr/local/bin/ssb-gitconfig.py https://raw.githubusercontent.com/statisticsnorway/kvakk-git-tools/main/ssb-gitconfig/ssb-gitconfig.py
 RUN chmod +x /usr/local/bin/ssb-gitconfig.py
 
+COPY jupyter_notebook_extra_config.py /tmp/
+RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
+    rm -f /tmp/jupyter_notebook_extra_config.py
+
+USER $NB_UID
