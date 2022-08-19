@@ -53,3 +53,6 @@ r-cran-eurostat
 r-cran-wbstats
 r-cran-countrycode
 r-cran-gargle
+r-cran-lubridate
+r-cran-haven
+r-cran-survey
