@@ -18,6 +18,9 @@ resources:
       name: statisticsnorway/azure-pipelines-templates
       endpoint: statisticsnorway
 
+pool:
+  name: 'extended_storage'
+
 parameters:
     # The URL of the registry which will host the built Docker image.
   - name: imageHost
