@@ -30,6 +30,10 @@ variables:
     value: 'prod-bip/ssb/statistikktjenester/jupyterlab-common'
   - name: imageTagAfterVulnerabilityScan
     value: '$(Build.SourceBranchName)-$(Build.SourceVersion)'
+  - name: Dockerfile
+    value: 'docker/Dockerfile'
+  - name: timeBetweenRetriesVulnerabilityScan
+    value: 300000 # 5 minutes
 
 # Job which builds Docker image, pushes this to GCR and checks for any image vulnerabilities
 # NOTE: Sub-project pipelines are still running with the root working directory
@@ -42,7 +46,8 @@ jobs:
         parameters:
           imageName: $(imageName)
           repoName: $(repoName)
-          Dockerfile: 'docker/Dockerfile'
+          Dockerfile: $(Dockerfile)
+          timeBetweenRetriesVulnerabilityScan: $(timeBetweenRetriesVulnerabilityScan)
 
       # Need to tag 'latest' image (used by docker-tag-for-production)
       - script: |
