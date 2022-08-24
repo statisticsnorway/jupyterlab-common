@@ -27,9 +27,11 @@ RUN apt-get update -y \
 
 ENV R_HOME /usr/lib/R
 ENV R_LIBS_USER /usr/lib/R/library
+# https://cran.r-project.org/web/packages/arrow/vignettes/install.html
+ENV NOT_CRAN true
+ENV ARROW_GCS=ON
 
 COPY r-packages.txt /tmp/r-packages.txt
-COPY jwsacruncher-2.2.4.zip /tmp/jwsacruncher-2.2.4.zip
 
 RUN apt update && \
     apt-get -y clean all && \
@@ -50,6 +52,8 @@ RUN apt update && \
     apt autoremove -y && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/*
+
+COPY jwsacruncher-2.2.4.zip /tmp/jwsacruncher-2.2.4.zip
 
 # Setup R java support and install R packages that are not available as Ubuntu packages
 RUN R CMD javareconf -e && \
@@ -75,18 +79,13 @@ RUN R CMD javareconf -e && \
     R -e "install.packages('dcmodify', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('simputation', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "library(rio); install_formats()" && \
+    R -e "install.packages('arrow', dependencies=FALSE, repos='https://cloud.r-project.org/')" && \
+    R -e "remotes::install_github('r-barnes/dggridR', vignette=TRUE)" && \
+    R -e "remotes::install_github('statisticsnorway/Kostra')" && \
+    rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
     # Doesn t work with Java11 - use a custom one
     #curl --silent -L -o- https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.3/jwsacruncher-2.2.3-bin.zip | bsdtar -xvf- -C /opt && \
     unzip /tmp/jwsacruncher-2.2.4.zip -d /opt && fix-permissions /opt/jwsacruncher-2.2.4 && rm -f /tmp/jwsacruncher-2.2.4.zip
-
-# https://cran.r-project.org/web/packages/arrow/vignettes/install.html
-ENV NOT_CRAN true
-ENV ARROW_GCS=ON
-RUN R -e "install.packages('arrow', dependencies=FALSE, repos='https://cloud.r-project.org/')"
-
-RUN R -e "remotes::install_github('r-barnes/dggridR', vignette=TRUE)" && \
-    R -e "remotes::install_github('statisticsnorway/Kostra')" && \
-    rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
 USER $NB_UID
 
@@ -153,17 +152,16 @@ RUN echo "**** install jupyterlab-git ****" && \
     echo "**** install sphinx ****" && \
     python3 -m pip install sphinx sphinx-autodoc-defaultargs sphinx-autodoc-typehints sphinx-rtd-theme && \
     python3 -m pip cache purge && \
-    # rm -rf /home/jovyan/.cache && \
     conda clean --all -y && \
-    jupyter lab clean
-
-RUN jupyter lab build --dev-build=False && \
+    jupyter lab clean && \
+    jupyter lab build --dev-build=False && \
     python3 -m pip install --upgrade jupyterhub && \
     jupyterhub upgrade-db
 
 RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
-    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow
+    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow && \
+    python3 -m pip cache purge 
 
 USER root
 
