@@ -11,7 +11,6 @@ r-cran-tidyverse
 r-cran-docopt
 r-cran-smallcountrounding
 r-cran-e1071
-r-cran-ssbtools
 r-cran-easysdctable
 r-cran-pxwebapidata
 r-cran-rglpk
