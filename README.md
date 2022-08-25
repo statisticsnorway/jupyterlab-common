@@ -1,2 +1,2 @@
 # jupyterlab-common
-Common repository for jupyterlab on-prem and jupyterlab dapla
+Common repository which is used as a base image for [Jupyterlab on-prem](https://github.com/statisticsnorway/jupyterhub-onprem) and [Jupyterlab for Dapla](https://github.com/statisticsnorway/jupyterhub-project).
