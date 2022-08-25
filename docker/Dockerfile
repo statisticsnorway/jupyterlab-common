@@ -59,6 +59,7 @@ COPY jwsacruncher-2.2.4.zip /tmp/jwsacruncher-2.2.4.zip
 RUN R CMD javareconf -e && \
     R -e "install.packages('RTextTools', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('configr', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
+    R -e "install.packages('SSBtools', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('RegSDC', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('oysteR', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('writexl', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
