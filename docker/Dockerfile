@@ -162,7 +162,7 @@ RUN echo "**** install jupyterlab-git ****" && \
 
 RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
-    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow dotenv poetry && \
+    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow python-dotenv poetry && \
     python3 -m pip cache purge 
 
 USER root
