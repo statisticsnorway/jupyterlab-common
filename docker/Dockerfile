@@ -83,6 +83,7 @@ RUN R CMD javareconf -e && \
     R -e "install.packages('arrow', dependencies=FALSE, repos='https://cloud.r-project.org/')" && \
     R -e "remotes::install_github('r-barnes/dggridR', vignette=TRUE)" && \
     R -e "remotes::install_github('statisticsnorway/Kostra')" && \
+    R -e "install.packages('dotenv', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
     rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
     # Doesn t work with Java11 - use a custom one
     #curl --silent -L -o- https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.3/jwsacruncher-2.2.3-bin.zip | bsdtar -xvf- -C /opt && \
@@ -161,7 +162,7 @@ RUN echo "**** install jupyterlab-git ****" && \
 
 RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
-    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow && \
+    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow python-dotenv poetry && \
     python3 -m pip cache purge 
 
 USER root
