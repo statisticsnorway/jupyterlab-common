@@ -151,6 +151,10 @@ RUN echo "**** install jupyterlab-git ****" && \
     # Together with with envkernel Jupyter users can create Jupyter kernels with a different environment.
     echo "**** install pipenv envkernel ****" && \
     python3 -m pip install pipenv envkernel && \
+    echo "**** install cruft ****" && \
+    python3 -m pip install cruft && \
+    echo "**** install poetry ****" && \
+    python3 -m pip install poetry && \
     echo "**** install collapsible headers (for Jupyterlab >= 3.0) ****" && \
     python3 -m pip install aquirdturtle_collapsible_headings && \
     echo "**** install sphinx ****" && \
