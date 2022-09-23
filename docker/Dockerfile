@@ -83,6 +83,7 @@ RUN R CMD javareconf -e && \
     R -e "install.packages('arrow', dependencies=FALSE, repos='https://cloud.r-project.org/')" && \
     R -e "remotes::install_github('r-barnes/dggridR', vignette=TRUE)" && \
     R -e "remotes::install_github('statisticsnorway/Kostra')" && \
+    R -e "remotes::install_github('statisticsnorway/SdcForetakPerson')" && \
     R -e "install.packages('dotenv', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
     rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
     # Doesn t work with Java11 - use a custom one
