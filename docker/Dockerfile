@@ -185,6 +185,9 @@ RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.0.38/quar
     ln -s /usr/local/quarto-1.0.38/bin/quarto /usr/local/bin/quarto && \
     rm -rf /tmp/quarto-1.0.38-linux-amd64.tar.gz
 
+# adding a custom bashrc with git branch in PS1
+COPY common-bashrc /etc/skel/.bashrc
+
 # Install ssb-gitconfig.py script
 RUN wget -O /usr/local/bin/ssb-gitconfig.py https://raw.githubusercontent.com/statisticsnorway/kvakk-git-tools/main/ssb-gitconfig/ssb-gitconfig.py
 RUN chmod +x /usr/local/bin/ssb-gitconfig.py
