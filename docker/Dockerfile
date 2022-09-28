@@ -1,7 +1,7 @@
 ARG spark_version="3.2.1"
 # Image contains Spark 3.x
 # jupyter/pyspark-notebook includes Python support for Apache Spark and pyarrow library
-FROM jupyter/pyspark-notebook:spark-${spark_version} 
+FROM jupyter/pyspark-notebook:spark-${spark_version}
 
 # Must match https://github.com/jupyter/docker-stacks/blob/master/pyspark-notebook/Dockerfile#L20
 ARG openjdk_version="11"
@@ -10,20 +10,20 @@ USER root
 # We will install R and packages using instructions from https://cloud.r-project.org/
 # Should be installed into /usr/lib/R/site-library
 RUN apt-get update -y \
-	&& apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" \
-	software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev apt-utils libudunits2-dev cmake \
+    && apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" \
+    software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev apt-utils libudunits2-dev cmake \
     # add the signing key (by Michael Rutter) for these repos
     # To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
     # Fingerprint: 298A3A825C0D65DFD57CBB651716619E084DAB9
     && wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
-        | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
+    | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
     # add the R 4.0 repo from CRAN -- adjust 'focal' to 'groovy' or 'bionic' as needed
     && add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" \
     # Get access to 5000+ CRAN Packages
     && add-apt-repository ppa:c2d4u.team/c2d4u4.0+ \
-	&& apt autoremove -y \
-	&& apt-get -y clean all \
-	&& rm -rf /var/lib/apt/lists/*
+    && apt autoremove -y \
+    && apt-get -y clean all \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV R_HOME /usr/lib/R
 ENV R_LIBS_USER /usr/lib/R/library
@@ -160,6 +160,10 @@ RUN echo "**** install jupyterlab-git ****" && \
     python3 -m pip install aquirdturtle_collapsible_headings && \
     echo "**** install sphinx ****" && \
     python3 -m pip install sphinx sphinx-autodoc-defaultargs sphinx-autodoc-typehints sphinx-rtd-theme && \
+    echo "**** disable extensions which allow downloading ****" && \
+    jupyter labextension disable @jupyterlab/docmanager-extension:download && \
+    jupyter labextension disable @jupyterlab/filebrowser-extension:download && \
+    echo "**** clean caches and finish up ****" && \
     python3 -m pip cache purge && \
     conda clean --all -y && \
     jupyter lab clean && \
@@ -171,7 +175,7 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
     python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow python-dotenv poetry && \
     python3 -m pip install ssb-datadoc==0.1.7 && \
-    python3 -m pip cache purge 
+    python3 -m pip cache purge
 
 USER root
 
