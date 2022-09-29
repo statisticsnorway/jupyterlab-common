@@ -198,6 +198,7 @@ RUN chmod +x /usr/local/bin/check-git-config.sh
 
 COPY jupyter_notebook_extra_config.py /tmp/
 RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
+    chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
 
 USER $NB_UID
