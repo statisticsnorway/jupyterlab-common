@@ -1,9 +1,5 @@
-ARG spark_version="3.2.1"
-# Image contains Spark 3.x
-# jupyter/pyspark-notebook includes Python support for Apache Spark and pyarrow library
-FROM jupyter/pyspark-notebook:spark-${spark_version}
+FROM jupyter/pyspark-notebook:scipy-notebook
 
-# Must match https://github.com/jupyter/docker-stacks/blob/master/pyspark-notebook/Dockerfile#L20
 ARG openjdk_version="11"
 USER root
 
@@ -11,6 +7,7 @@ USER root
 # Should be installed into /usr/lib/R/site-library
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" \
+    ca-certificates-java && \
     software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev apt-utils libudunits2-dev cmake \
     # add the signing key (by Michael Rutter) for these repos
     # To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
@@ -93,6 +90,13 @@ RUN R CMD javareconf -e && \
     ln -s /opt/jwsacruncher-2.2.4/bin/jwsacruncher /usr/bin/jwsacruncher
 
 USER $NB_UID
+
+# Install pyarrow
+RUN mamba install --quiet --yes \
+    'pyarrow' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 RUN echo "**** install jupyterlab-git ****" && \
     python3 -m pip install --upgrade jupyterlab-git && \
