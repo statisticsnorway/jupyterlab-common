@@ -188,7 +188,7 @@ USER root
 RUN pip install safety
 RUN safety check --full-report -i 49913 -i 50463 -i 50664
 RUN pip uninstall -y safety && \
-    pip cache purge
+    rm -rf /home/jovyan/.cache
 
 # Set localtime to Europe/Oslo
 RUN rm -f /etc/localtime && \
