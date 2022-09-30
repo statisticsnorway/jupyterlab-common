@@ -1,4 +1,4 @@
-FROM jupyter/pyspark-notebook:scipy-notebook
+FROM jupyter/scipy-notebook
 
 ARG openjdk_version="11"
 USER root
