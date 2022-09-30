@@ -186,7 +186,7 @@ USER root
 
 # Python vuln check, and remove package afterwards
 RUN pip install safety
-RUN safety check --full-report -i 49913 -i 50463 -i 50464
+RUN safety check --full-report -i 49913 -i 50463 -i 50664
 RUN pip uninstall -y safety && \
     pip cache purge
 
