@@ -179,6 +179,12 @@ RUN echo "**** install common pip packages ****" && \
 
 USER root
 
+# Python vuln check, and remove package afterwards
+RUN pip install safety
+RUN safety check --full-report
+RUN pip uninstall -y safety && \
+    pip cache purge
+
 # Set localtime to Europe/Oslo
 RUN rm -f /etc/localtime && \
     ln -s /usr/share/zoneinfo/Europe/Oslo /etc/localtime
