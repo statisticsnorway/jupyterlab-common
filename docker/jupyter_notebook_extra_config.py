@@ -9,3 +9,6 @@ c.Application.log_level = 'WARN'
 
 # Allow deleting non-empty directories from the file browser
 c.FileContentsManager.always_delete_dir = True
+
+# Allow users to toggle show/hide hidden files
+c.ContentsManager.allow_hidden = True
