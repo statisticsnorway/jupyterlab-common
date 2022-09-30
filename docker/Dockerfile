@@ -90,14 +90,14 @@ RUN R CMD javareconf -e && \
     # Create a symlink at /usr/bin so users can call jwsacruncher from anywhere
     ln -s /opt/jwsacruncher-2.2.4/bin/jwsacruncher /usr/bin/jwsacruncher
 
-USER $NB_UID
-
 # Install pyarrow
 RUN mamba install --quiet --yes \
     'pyarrow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+USER $NB_UID
 
 RUN echo "**** install jupyterlab-git ****" && \
     python3 -m pip install --upgrade jupyterlab-git && \
