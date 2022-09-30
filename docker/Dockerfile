@@ -16,7 +16,7 @@ RUN apt-get update -y \
     # add the R 4.0 repo from CRAN -- adjust 'focal' to 'groovy' or 'bionic' as needed
     && add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" \
     # Get access to 5000+ CRAN Packages
-    && add-apt-repository ppa:c2d4u.team/c2d4u4.0+ \
+    && add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ \
     && apt autoremove -y \
     && apt-get -y clean all \
     && rm -rf /var/lib/apt/lists/*
