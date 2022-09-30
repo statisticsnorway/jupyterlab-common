@@ -215,5 +215,11 @@ COPY jupyter_notebook_extra_config.py /tmp/
 RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
     chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
+    
+RUN apt update && \
+    apt-get -y clean all && \
+    apt-get -y update && \
+    apt-get -y upgrade && \
+    apt-get -y dist-upgrade && \
 
 USER $NB_UID
