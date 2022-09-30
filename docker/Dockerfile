@@ -1,26 +1,24 @@
-ARG spark_version="3.2.1"
-# Image contains Spark 3.x
-# jupyter/pyspark-notebook includes Python support for Apache Spark and pyarrow library
-FROM jupyter/pyspark-notebook:spark-${spark_version}
+FROM jupyter/scipy-notebook
 
-# Must match https://github.com/jupyter/docker-stacks/blob/master/pyspark-notebook/Dockerfile#L20
 ARG openjdk_version="11"
 USER root
 
 # We will install R and packages using instructions from https://cloud.r-project.org/
 # Should be installed into /usr/lib/R/site-library
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" \
-    software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev apt-utils libudunits2-dev cmake \
+    && apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" ca-certificates-java \
+    software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev \
+    apt-utils libudunits2-dev cmake lsb-release gpg-agent \
     # add the signing key (by Michael Rutter) for these repos
     # To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
     # Fingerprint: 298A3A825C0D65DFD57CBB651716619E084DAB9
     && wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc \
     | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
     # add the R 4.0 repo from CRAN -- adjust 'focal' to 'groovy' or 'bionic' as needed
-    && add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" \
+    && add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" \
+    && gpg-agent --daemon \
     # Get access to 5000+ CRAN Packages
-    && add-apt-repository ppa:c2d4u.team/c2d4u4.0+ \
+    && add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ \
     && apt autoremove -y \
     && apt-get -y clean all \
     && rm -rf /var/lib/apt/lists/*
@@ -91,6 +89,13 @@ RUN R CMD javareconf -e && \
     unzip /tmp/jwsacruncher-2.2.4.zip -d /opt && fix-permissions /opt/jwsacruncher-2.2.4 && rm -f /tmp/jwsacruncher-2.2.4.zip && \
     # Create a symlink at /usr/bin so users can call jwsacruncher from anywhere
     ln -s /opt/jwsacruncher-2.2.4/bin/jwsacruncher /usr/bin/jwsacruncher
+
+# Install pyarrow
+RUN mamba install --quiet --yes \
+    'pyarrow' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 USER $NB_UID
 
@@ -178,6 +183,12 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip cache purge
 
 USER root
+
+# Python vuln check, and remove package afterwards
+RUN pip install safety
+RUN safety check --full-report -i 49913 -i 50463 -i 50664
+RUN pip uninstall -y safety && \
+    rm -rf /home/jovyan/.cache
 
 # Set localtime to Europe/Oslo
 RUN rm -f /etc/localtime && \
