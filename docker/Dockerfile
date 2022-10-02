@@ -21,6 +21,8 @@ RUN apt-get update -y \
     && gpg-agent --daemon \
     # Get access to 5000+ CRAN Packages
     && add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ \
+    # Fix CVE-2022-0778
+    && apt-get remove openssl -y \
     && apt autoremove -y \
     && apt-get -y clean all \
     && rm -rf /var/lib/apt/lists/*
