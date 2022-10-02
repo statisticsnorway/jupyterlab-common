@@ -6,8 +6,8 @@ USER root
 # We will install R and packages using instructions from https://cloud.r-project.org/
 # Should be installed into /usr/lib/R/site-library
 RUN apt-get update -y \
-    apt-get -y upgrade && \
-    apt-get -y dist-upgrade && \
+    && apt-get -y upgrade \
+    && apt-get -y dist-upgrade \
     && apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" ca-certificates-java \
     software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev \
     apt-utils libudunits2-dev cmake lsb-release gpg-agent \
