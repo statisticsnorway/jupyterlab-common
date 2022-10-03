@@ -49,7 +49,7 @@ jobs:
           repoName: $(repoName)
           Dockerfile: $(Dockerfile)
           timeBetweenRetriesVulnerabilityScan: $(timeBetweenRetriesVulnerabilityScan)
-          tagAfterVulnerabilityScanCondition: 'succeededOrFailed()'
+          skipImageVulnerabilityScan: 'true'
 
       # Need to tag 'latest' image (used by docker-tag-for-production)
       - script: |
