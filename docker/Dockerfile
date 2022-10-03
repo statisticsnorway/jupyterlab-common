@@ -88,13 +88,6 @@ RUN R CMD javareconf -e && \
     # Create a symlink at /usr/bin so users can call jwsacruncher from anywhere
     ln -s /opt/jwsacruncher-2.2.4/bin/jwsacruncher /usr/bin/jwsacruncher
 
-# Install pyarrow
-RUN mamba install --quiet --yes \
-    'pyarrow' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
 USER $NB_UID
 
 RUN echo "**** install jupyterlab-git ****" && \
@@ -176,7 +169,7 @@ RUN echo "**** install jupyterlab-git ****" && \
 
 RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
-    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow python-dotenv poetry && \
+    python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow==9.0.* python-dotenv poetry && \
     python3 -m pip install ssb-datadoc==0.1.7 && \
     python3 -m pip cache purge
 
