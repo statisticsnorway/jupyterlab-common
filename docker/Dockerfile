@@ -170,7 +170,7 @@ RUN echo "**** install jupyterlab-git ****" && \
 RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
     python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow==9.0.* python-dotenv poetry && \
-    python3 -m pip install ssb-datadoc==0.1.7 && \
+    python3 -m pip install ssb-datadoc==0.1.8 && \
     python3 -m pip cache purge
 
 USER root
