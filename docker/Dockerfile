@@ -6,6 +6,8 @@ USER root
 # We will install R and packages using instructions from https://cloud.r-project.org/
 # Should be installed into /usr/lib/R/site-library
 RUN apt-get update -y \
+    && apt-get -y upgrade \
+    && apt-get -y dist-upgrade \
     && apt-get install -y --no-install-recommends "openjdk-${openjdk_version}-jdk-headless" ca-certificates-java \
     software-properties-common dirmngr build-essential curl libssl-dev libcurl4-openssl-dev libgdal-dev libre2-dev \
     apt-utils libudunits2-dev cmake lsb-release gpg-agent \
@@ -32,10 +34,6 @@ ENV ARROW_GCS=ON
 COPY r-packages.txt /tmp/r-packages.txt
 
 RUN apt update && \
-    apt-get -y clean all && \
-    apt-get -y update && \
-    apt-get -y upgrade && \
-    apt-get -y dist-upgrade && \
     # vim support
     apt-get -y install vim && \
     # required for json parsing using bash
@@ -215,5 +213,5 @@ COPY jupyter_notebook_extra_config.py /tmp/
 RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
     chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
-
+    
 USER $NB_UID

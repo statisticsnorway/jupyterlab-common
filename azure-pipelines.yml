@@ -17,6 +17,7 @@ resources:
       type: github
       name: statisticsnorway/azure-pipelines-templates
       endpoint: statisticsnorway
+      ref: override-vuln-check-condition
 
 pool:
   name: 'extended_storage'
@@ -48,6 +49,7 @@ jobs:
           repoName: $(repoName)
           Dockerfile: $(Dockerfile)
           timeBetweenRetriesVulnerabilityScan: $(timeBetweenRetriesVulnerabilityScan)
+          skipImageVulnerabilityScan: 'true'
 
       # Need to tag 'latest' image (used by docker-tag-for-production)
       - script: |
