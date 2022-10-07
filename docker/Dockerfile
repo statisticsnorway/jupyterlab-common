@@ -148,8 +148,6 @@ RUN echo "**** install jupyterlab-git ****" && \
     # Together with with envkernel Jupyter users can create Jupyter kernels with a different environment.
     echo "**** install pipenv envkernel ****" && \
     python3 -m pip install pipenv envkernel && \
-    echo "**** install cruft ****" && \
-    python3 -m pip install cruft && \
     echo "**** install poetry ****" && \
     python3 -m pip install poetry && \
     echo "**** install collapsible headers (for Jupyterlab >= 3.0) ****" && \
@@ -170,7 +168,8 @@ RUN echo "**** install jupyterlab-git ****" && \
 RUN echo "**** install common pip packages ****" && \
     python3 -m pip install pytest pytest_tornasync pytest-cov pytest-mock  && \
     python3 -m pip install pyjstat xmltodict lxml holidays PyGithub pre-commit pyminizip rich openpyxl pyarrow==9.0.* python-dotenv poetry && \
-    python3 -m pip install ssb-datadoc==0.1.8 && \
+    python3 -m pip install ssb-datadoc && \
+    python3 -m pip install ssb-project-cli && \
     python3 -m pip cache purge
 
 USER root
@@ -206,5 +205,5 @@ COPY jupyter_notebook_extra_config.py /tmp/
 RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
     chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
-    
+
 USER $NB_UID
