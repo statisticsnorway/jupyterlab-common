@@ -55,4 +55,3 @@ r-cran-gargle
 r-cran-lubridate
 r-cran-haven
 r-cran-survey
-r-cran-priceindices
