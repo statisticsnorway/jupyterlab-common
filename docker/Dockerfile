@@ -207,4 +207,7 @@ RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_c
     chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
 
+# User will not be able to install packages outside of a virtual environment
+RUN echo export PIP_REQUIRE_VIRTUALENV=true >> $HOME/.bashrc
+
 USER $NB_UID
