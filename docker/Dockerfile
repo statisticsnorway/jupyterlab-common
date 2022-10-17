@@ -140,9 +140,9 @@ RUN echo "**** install jupyterlab-git ****" && \
     python3 -m pip install jupyterlab-system-monitor && \
     echo "**** install jupytext ****" && \
     python3 -m pip install jupytext && \
-    echo "**** install lckr-jupyterlab-variableinspector ****" && \
-    python3 -m pip install --upgrade lckr-jupyterlab-variableinspector && \
-    #jupyter labextension install --no-build jupyterlab-jupytext && \
+    #echo "**** install lckr-jupyterlab-variableinspector ****" && \
+    #showstopper: https://github.com/lckr/jupyterlab-variableInspector/issues/122
+    #python3 -m pip install --upgrade lckr-jupyterlab-variableinspector && \
     echo "**** uninstall IPython Parallels (comes default with dockerhub image)  ****" && \
     python3 -m pip uninstall -y ipyparallel && \
     # pipenv is used for keeping track of and loading the specific package dependencies of each repository
