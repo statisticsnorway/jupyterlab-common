@@ -118,5 +118,3 @@ if ! shopt -oq posix; then
   fi
 fi
 eval "$(command conda shell.bash hook 2> /dev/null)"
-
-# User will not be able to install packages outside of a virtual environment
