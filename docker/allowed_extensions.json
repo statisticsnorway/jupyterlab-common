@@ -56,9 +56,6 @@
     },
     {
       "name": "@lckr/jupyterlab_variableinspector"
-    },
-    {
-      "name": "jupyterlab-dash"
     }
   ]
 }
