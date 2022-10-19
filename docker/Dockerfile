@@ -82,6 +82,7 @@ RUN R CMD javareconf -e && \
     R -e "remotes::install_github('statisticsnorway/SdcForetakPerson')" && \
     R -e "install.packages('dotenv', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('PriceIndices', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
+    R -e "install.packages('sfarrow', dependencies=FALSE, repos='https://cloud.r-project.org/')" && \
     rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
     # Doesn t work with Java11 - use a custom one
     #curl --silent -L -o- https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.3/jwsacruncher-2.2.3-bin.zip | bsdtar -xvf- -C /opt && \
