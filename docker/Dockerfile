@@ -216,7 +216,4 @@ RUN chmod u-w  /opt/conda/share/jupyter/labextensions
 RUN chmod u-w  /opt/conda/share/jupyter/nbextensions
 RUN chmod u-w  /opt/conda/share/jupyter/lab/extensions
 
-# User will not be able to install packages outside of a virtual environment
-RUN echo export PIP_REQUIRE_VIRTUALENV=true >> $HOME/.bashrc
-
 USER $NB_UID
