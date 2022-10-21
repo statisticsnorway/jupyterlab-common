@@ -174,6 +174,9 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip install ssb-project-cli && \
     python3 -m pip cache purge
 
+#Disable Jupyter extension manager
+RUN jupyter labextension disable @jupyterlab/extensionmanager-extension
+
 USER root
 
 # Python vuln check, and remove package afterwards
@@ -207,9 +210,6 @@ COPY jupyter_notebook_extra_config.py /tmp/
 RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_config.py && \
     chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
-
-#Disable Jupyter extension manager
-RUN jupyter labextension disable @jupyterlab/extensionmanager-extension
 
 #Prevent installation of extentions, by removing write privilege in extension folders.
 RUN chmod u-w  /opt/conda/share/jupyter/labextensions
