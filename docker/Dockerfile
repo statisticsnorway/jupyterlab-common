@@ -80,6 +80,7 @@ RUN R CMD javareconf -e && \
     R -e "remotes::install_github('r-barnes/dggridR', vignette=TRUE)" && \
     R -e "remotes::install_github('statisticsnorway/Kostra')" && \
     R -e "remotes::install_github('statisticsnorway/SdcForetakPerson')" && \
+    R -e "remotes::install_github('statisticsnorway/struktuR')" && \
     R -e "install.packages('dotenv', dependencies=FALSE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('PriceIndices', dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "install.packages('sfarrow', dependencies=FALSE, repos='https://cloud.r-project.org/')" && \
