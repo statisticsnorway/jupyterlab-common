@@ -131,8 +131,9 @@ RUN echo "**** install jupyterlab-git ****" && \
     python3 -m pip install python-language-server[all] && \
     echo "**** install ipysheet ****" && \
     python3 -m pip install ipysheet && \
-    echo "**** install ipyaggrid ****" && \
-    python3 -m pip install ipyaggrid && \
+    #echo "**** install ipyaggrid ****" && \
+    #showstopper: https://github.com/jupyterlab/jupyterlab/issues/8176
+    #python3 -m pip install ipyaggrid && \
     #echo "**** install qgrid ****" && \
     #showstopper: https://github.com/quantopian/qgrid/issues/350
     #python3 -m pip install qgrid2 && \
