@@ -193,11 +193,10 @@ RUN rm -f /etc/localtime && \
 
 # Installing quarto https://quarto.org/
 # not installing .deb file because some features don't work
-RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.0.38/quarto-1.0.38-linux-amd64.tar.gz -P /tmp/ && \
-    tar -zxf /tmp/quarto-1.0.38-linux-amd64.tar.gz -C /usr/local/ && \
-    ln -s /usr/local/quarto-1.0.38/bin/quarto /usr/local/bin/quarto && \
-    quarto install --no-prompt extension quarto-ext/fontawesome && \
-    rm -rf /tmp/quarto-1.0.38-linux-amd64.tar.gz
+RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.2.262/quarto-1.2.262-linux-amd64.tar.gz -P /tmp/ && \
+    tar -zxf /tmp/quarto-1.2.262-linux-amd64.tar.gz -C /usr/local/ && \
+    ln -s /usr/local/quarto-1.2.262/bin/quarto /usr/local/bin/quarto && \
+    rm -rf /tmp/quarto-1.2.262-linux-amd64.tar.gz
 
 # adding a custom bashrc with git branch in PS1
 COPY common-bashrc /etc/skel/.bashrc
