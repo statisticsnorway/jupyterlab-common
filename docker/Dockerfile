@@ -154,8 +154,6 @@ RUN echo "**** install jupyterlab-git ****" && \
     python3 -m pip install pipenv envkernel && \
     echo "**** install poetry ****" && \
     python3 -m pip install poetry && \
-    echo "**** install collapsible headers (for Jupyterlab >= 3.0) ****" && \
-    python3 -m pip install aquirdturtle_collapsible_headings && \
     echo "**** install sphinx ****" && \
     python3 -m pip install sphinx sphinx-autodoc-defaultargs sphinx-autodoc-typehints sphinx-rtd-theme && \
     echo "**** disable extensions which allow downloading ****" && \
