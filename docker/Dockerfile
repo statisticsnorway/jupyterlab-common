@@ -34,7 +34,7 @@ ENV ARROW_GCS=ON
 COPY r-packages.txt /tmp/r-packages.txt
 
 RUN apt update && \
-    #requierments for gcloud cli
+    #requirements for gcloud cli
     apt-get -y install apt-transport-https ca-certificates gnupg && \
     # vim support
     apt-get -y install vim && \
