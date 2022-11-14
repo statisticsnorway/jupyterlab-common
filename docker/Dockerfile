@@ -34,6 +34,8 @@ ENV ARROW_GCS=ON
 COPY r-packages.txt /tmp/r-packages.txt
 
 RUN apt update && \
+    #requierments for gcloud cli
+    apt-get -y install apt-transport-https ca-certificates gnupg && \
     # vim support
     apt-get -y install vim && \
     # required for json parsing using bash
@@ -173,6 +175,12 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip install ssb-datadoc && \
     python3 -m pip install ssb-project-cli && \
     python3 -m pip cache purge
+
+#Install gcloud CLI
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
+ apt-get update -y && \
+ apt-get install google-cloud-cli -y
 
 #Disable Jupyter extension manager
 RUN jupyter labextension disable @jupyterlab/extensionmanager-extension
