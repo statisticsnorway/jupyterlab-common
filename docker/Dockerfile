@@ -34,6 +34,8 @@ ENV ARROW_GCS=ON
 COPY r-packages.txt /tmp/r-packages.txt
 
 RUN apt update && \
+    #requirements for gcloud cli
+    apt-get -y install apt-transport-https ca-certificates gnupg && \
     # vim support
     apt-get -y install vim && \
     # required for json parsing using bash
@@ -90,6 +92,12 @@ RUN R CMD javareconf -e && \
     unzip /tmp/jwsacruncher-2.2.4.zip -d /opt && fix-permissions /opt/jwsacruncher-2.2.4 && rm -f /tmp/jwsacruncher-2.2.4.zip && \
     # Create a symlink at /usr/bin so users can call jwsacruncher from anywhere
     ln -s /opt/jwsacruncher-2.2.4/bin/jwsacruncher /usr/bin/jwsacruncher
+
+#Install gcloud CLI
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
+    apt-get update -y && \
+    apt-get install google-cloud-cli -y
 
 USER $NB_UID
 
