@@ -93,6 +93,12 @@ RUN R CMD javareconf -e && \
     # Create a symlink at /usr/bin so users can call jwsacruncher from anywhere
     ln -s /opt/jwsacruncher-2.2.4/bin/jwsacruncher /usr/bin/jwsacruncher
 
+#Install gcloud CLI
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
+    apt-get update -y && \
+    apt-get install google-cloud-cli -y
+
 USER $NB_UID
 
 RUN echo "**** install jupyterlab-git ****" && \
@@ -175,12 +181,6 @@ RUN echo "**** install common pip packages ****" && \
     python3 -m pip install ssb-datadoc && \
     python3 -m pip install ssb-project-cli && \
     python3 -m pip cache purge
-
-#Install gcloud CLI
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
- curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
- apt-get update -y && \
- apt-get install google-cloud-cli -y
 
 #Disable Jupyter extension manager
 RUN jupyter labextension disable @jupyterlab/extensionmanager-extension
