@@ -219,6 +219,9 @@ RUN cat /tmp/jupyter_notebook_extra_config.py >> /etc/jupyter/jupyter_notebook_c
     chmod g-w /etc/jupyter/*.py && \
     rm -f /tmp/jupyter_notebook_extra_config.py
 
+# Remove duplicate Python lib
+RUN rm /usr/bin/python3 && ln -s /opt/conda/bin/python3 /usr/bin/python3
+
 #Prevent installation of extentions, by removing write privilege in extension folders.
 RUN chmod u-w  /opt/conda/share/jupyter/labextensions
 RUN chmod u-w  /opt/conda/share/jupyter/nbextensions
