@@ -148,6 +148,8 @@ RUN echo "**** install jupyterlab-git ****" && \
     #python3 -m pip install --upgrade lckr-jupyterlab-variableinspector && \
     echo "**** uninstall IPython Parallels (comes default with dockerhub image)  ****" && \
     python3 -m pip uninstall -y ipyparallel && \
+    echo "**** uninstall Sympy and mpmath (comes default with dockerhub image)  ****" && \
+    python3 -m pip uninstall -y sympy mpmath && \
     # pipenv is used for keeping track of and loading the specific package dependencies of each repository
     # Together with with envkernel Jupyter users can create Jupyter kernels with a different environment.
     echo "**** install pipenv envkernel ****" && \
