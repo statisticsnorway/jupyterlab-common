@@ -166,7 +166,7 @@ RUN echo "**** install jupyterlab-git ****" && \
     conda clean --all -y && \
     jupyter lab clean && \
     jupyter lab build --dev-build=False && \
-    # Apply hot-fix for jupyterlab-gi (0.4.1). Remove when the base image is updated
+    # Apply hot-fix for jupyterlab-git (0.4.1). Remove when the base image is updated
     python3 -m pip install --upgrade jupyterhub jupyterlab-git && \
     jupyterhub upgrade-db
 
