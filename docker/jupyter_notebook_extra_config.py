@@ -13,9 +13,11 @@ c.TerminalManager.cull_inactive_timeout = 60 * 60
 c.TerminalManager.cull_interval = 2 * 60
 
 c.Application.log_level = 'WARN'
+c.Application.log_format = '%(asctime)s %(levelname)s %(name)s %(funcName)s:%(lineno)d %(message)s”'
 
 # Allow deleting non-empty directories from the file browser
 c.FileContentsManager.always_delete_dir = True
 
 # Allow users to toggle show/hide hidden files
 c.ContentsManager.allow_hidden = True
+
