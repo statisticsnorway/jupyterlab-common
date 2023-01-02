@@ -94,7 +94,7 @@ RUN R CMD javareconf -e && \
 USER $NB_UID
 
 RUN echo "**** install jupyterlab-git ****" && \
-    python3 -m pip install --upgrade jupyterlab-git && \
+    python3 -m pip install --upgrade jupyterhub jupyterlab-git && \
     echo "**** install nbdime ****" && \
     python3 -m pip install --upgrade nbdime && \
     jupyter labextension install --no-build nbdime-jupyterlab && \
@@ -166,8 +166,8 @@ RUN echo "**** install jupyterlab-git ****" && \
     conda clean --all -y && \
     jupyter lab clean && \
     jupyter lab build --dev-build=False && \
-    # Apply hot-fix for jupyterlab-git (0.4.1). Remove when the base image is updated
-    python3 -m pip install --upgrade jupyterhub jupyterlab-git && \
+    # Apply hot-fix for pillow.
+    python3 -m pip install --upgrade pillow && \
     jupyterhub upgrade-db
 
 RUN echo "**** install common pip packages ****" && \
@@ -184,7 +184,7 @@ USER root
 
 # Python vuln check, and remove package afterwards
 RUN pip install safety
-RUN safety check --full-report -i 49913 -i 50463 -i 50664
+RUN safety check --full-report -i 51668
 RUN pip uninstall -y safety && \
     rm -rf /home/jovyan/.cache
 
